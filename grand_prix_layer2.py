@@ -3,11 +3,11 @@ MIT BWSI Autonomous RACECAR
 MIT License
 racecar-neo-outreach-labs
 
-File Name: lab_f.py
+File Name: grand_prix_layer2.py
 
-Title: Lab F - Line Follower
+Title: GRAND PRIX!
 
-Author: Jaden Tang << [Write your name or team name here]
+Author: Team 4 - BWSI
 
 Purpose: Write a script to enable fully autonomous behavior from the RACECAR. The
 RACECAR should automatically identify the color of a line it sees, then drive on the
@@ -85,7 +85,7 @@ def update_contour():
     global speed
     global angle
     image = rc.camera.get_color_image()
-    if(red >= 2):
+    if(red >= 3):
         COLOR_PRIORITY = (GREEN, BLUE)
     if image is None:
         contour_center = None
