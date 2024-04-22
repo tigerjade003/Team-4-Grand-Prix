@@ -9,19 +9,7 @@ Title: GRAND PRIX!
 
 Author: Team 4 - BWSI
 
-Purpose: Write a script to enable fully autonomous behavior from the RACECAR. The
-RACECAR should automatically identify the color of a line it sees, then drive on the
-center of the line throughout the obstacle cour ???se. The RACECAR should also identify
-color changes, following colors with higher priority than others. Complete the lines 
-of code under the #TODO indicators to complete the lab.
-
-Expected Outcome: When the user runs the script, they are able to control the RACECAR
-using the following keys:
-- When the right trigger is pressed, the RACECAR moves forward at full speed
-- When the left trigger is pressed, the RACECAR, moves backwards at full speed
-- The angle of the RACECAR should only be controlled by the center of the line contour
-- The RACECAR sees the color RED as the highest priority, then GREEN, then BLUE
-"""
+Purpose : Finish the course as fast as possible
 
 ########################################################################################
 # Imports
