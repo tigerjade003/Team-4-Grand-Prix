@@ -5,11 +5,18 @@ racecar-neo-outreach-labs
 
 File Name: grand_prix_layer2.py
 
-Title: GRAND PRIX!
+Title: GRAND PRIX!!!!
 
-Author: Team 4 - BWSI
+Author: BWSI Team 4 2024
 
-Purpose : Finish the course as fast as possible
+Purpose: Write a script to enable fully autonomous behavior from the RACECAR. The
+RACECAR should automatically identify the color of a line it sees, then drive on the
+center of the line throughout the obstacle cour ???se. The RACECAR should also identify
+color changes, following colors with higher priority than others. Complete the lines 
+of code under the #TODO indicators to complete the lab.
+
+runs as fast as possible to the finish line
+"""
 
 ########################################################################################
 # Imports
@@ -179,11 +186,13 @@ def update():
         error = -(setpoint - contour_center[1])
         #print(f"ERROR: {error}")
         angle = remap_range(error, -rc.camera.get_width()/2, rc.camera.get_width()/2, -1, 1)
-        if((contour_area > 8000 and not found) or (totaltime - 0.6 <= last_time and last_time != 0)):
-            angle = abs(angle)
+        if((contour_area > 8000 and not found) or (totaltime - 0.2 <= last_time and last_time != 0)):
+            if(angle < -0.7 or angle > -0.3):
+                angle = abs(angle)
             if contour_area > 8000:
                 last_time = totaltime
                 found = True
+        
         #print(f"ANGLE: {angle}")
 
     # Use the triggers to control the car's speed
