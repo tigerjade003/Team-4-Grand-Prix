@@ -186,7 +186,7 @@ def update():
         error = -(setpoint - contour_center[1])
         #print(f"ERROR: {error}")
         angle = remap_range(error, -rc.camera.get_width()/2, rc.camera.get_width()/2, -1, 1)
-        if((contour_area > 8000 and not found) or (totaltime - 0.2 <= last_time and last_time != 0)):
+        if((contour_area > 8000 and not found) or (totaltime - 0.3 <= last_time and last_time != 0)):
             if(angle < -0.7 or angle > -0.3):
                 angle = abs(angle)
             if contour_area > 8000:
