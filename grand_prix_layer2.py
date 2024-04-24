@@ -64,7 +64,9 @@ last_color = ""
 cur_color = ""
 red = 0
 last_time = 0
+last_time2 = 0
 green = False
+greenc = 0
 found = False
 ########################################################################################
 # Functions
@@ -117,6 +119,7 @@ def update_contour():
         # Display the image to the screen
         rc.display.show_color_image(image)
         '''
+        
 
 # [FUNCTION] The start function is run once every time the start button is pressed
 def start():
@@ -152,22 +155,24 @@ def update():
     global red
     global green
     global last_time
-    totaltime += rc.get_delta_time()
-    """
-    After start() is run, this function is run every frame until the back button
-    is pressed
-    """
-    if not green:
-        rc.drive.set_max_speed(0.5)
-    elif red >= 2:
-        rc.drive.set_max_speed(0.5)
-    else:
-        rc.drive.set_max_speed(0.36)
+    global last_time2
     global COLOR_PRIORITY
     global speed
     global angle
     global contour_area
     global found
+    global greenc
+    totaltime += rc.get_delta_time()
+    """
+    After start() is run, this function is run every frame until the back button
+    is pressed
+    """
+    if green and greenc == 1:
+        rc.drive.set_max_speed(0.36)
+    elif red == 1:
+        rc.drive.set_max_speed(0.4)
+    else:
+        rc.drive.set_max_speed(0.5)
     # Search for contours in the current color image
     contour_area = 0
     update_contour()
@@ -177,6 +182,9 @@ def update():
             red += 1
         if cur_color == "green":
             green = True
+            greenc += 1
+        else:
+            green = False
     # TODO Part 3: Determine the angle that the RACECAR should receive based on the current 
     # position of the center of line contour on the screen. Hint: The RACECAR should drive in
     # a direction that moves the line back to the center of the screen.
@@ -207,7 +215,7 @@ def update():
 
     # Print the current speed and angle when the A button is held down
     if rc.controller.is_down(rc.controller.Button.A):
-        print("Speed:", speed, "Angle:", angle)
+        print("Speed:", speed, "Angle:", angle, "GREEN:", green, "RED:", red, "COLOR:", cur_color)
 
     # Print the center and area of the largest contour when B is held down
     if rc.controller.is_down(rc.controller.Button.B):
