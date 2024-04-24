@@ -109,12 +109,14 @@ def update_contour():
                     elif color == GREEN:
                         cur_color = "green"
                     break
-                    
+        '''
         if found:      
             rc_utils.draw_contour(image, contour)
             rc_utils.draw_circle(image, contour_center)
+    
         # Display the image to the screen
         rc.display.show_color_image(image)
+        '''
 
 # [FUNCTION] The start function is run once every time the start button is pressed
 def start():
@@ -186,7 +188,7 @@ def update():
         error = -(setpoint - contour_center[1])
         #print(f"ERROR: {error}")
         angle = remap_range(error, -rc.camera.get_width()/2, rc.camera.get_width()/2, -1, 1)
-        if((contour_area > 8000 and not found) or (totaltime - 0.3 <= last_time and last_time != 0)):
+        if((contour_area > 7700 and not found) or (totaltime - 0.7 <= last_time and last_time != 0)):
             if(angle < -0.7 or angle > -0.3):
                 angle = abs(angle)
             if contour_area > 8000:
