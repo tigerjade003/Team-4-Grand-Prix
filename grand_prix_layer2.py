@@ -45,21 +45,16 @@ MIN_CONTOUR_AREA = 30
 # A crop window for the floor directly in front of the car
 CROP_FLOOR = ((360, 0), (rc.camera.get_height(), rc.camera.get_width()))
 
-# TODO Part 1: Determine the HSV color threshold pairs for GREEN and RED
-# Colors, stored as a pair (hsv_min, hsv_max) Hint: Lab E!
-BLUE = ((90, 100, 100), (120, 255, 255))  # The HSV range for the color blue
-GREEN = ((40, 100, 100), (80, 255, 255))  # The HSV range for the color green
-RED = ((0, 100, 100), (10, 255, 255))  # The HSV range for the color red
-RED2 = ((165, 100, 100), (179, 255, 255))
-
-# Color priority: Red >> GREEN >> BLUE
-COLOR_PRIORITY = (GREEN, RED, RED2, BLUE)
+BLUE = ((105, 255, 255), (105, 255, 255)) 
+GREEN = ((64, 255, 255), (64, 255, 255)) 
+RED = ((0, 255, 255), (0, 255, 255))
+COLOR_PRIORITY = (GREEN, RED, BLUE)
 
 # >> Variables
-speed = 0.0  # The current speed of the car
-angle = 0.0  # The current angle of the car's wheels
-contour_center = None  # The (pixel row, pixel column) of contour
-contour_area = 0  # The area of contour
+speed = 0.0 
+angle = 0.0  
+contour_center = None  
+contour_area = 0  
 last_color = ""
 cur_color = ""
 red = 0
@@ -72,8 +67,6 @@ found = False
 # Functions
 ########################################################################################
 
-# [FUNCTION] Finds contours in the current color image and uses them to update 
-# contour_center and contour_area
 def update_contour():
     global COLOR_PRIORITY
     global contour_center
@@ -82,17 +75,13 @@ def update_contour():
     global speed
     global angle
     image = rc.camera.get_color_image()
-    if(red >= 3):
+    if(red >= 2 and cur_color != "red"):
         COLOR_PRIORITY = (GREEN, BLUE)
     if image is None:
         contour_center = None
         contour_area = 0
     else:
-        # Crop the image to the floor directly in front of the car
         image = rc_utils.crop(image, CROP_FLOOR[0], CROP_FLOOR[1])
-
-        # TODO Part 2: Search for line colors, and update the global variables
-        # contour_center and contour_area with the largest contour found
         found = False
         for color in COLOR_PRIORITY:
             contours = rc_utils.find_contours(image, color[0], color[1])
@@ -102,7 +91,7 @@ def update_contour():
                     contour_center = rc_utils.get_contour_center(contour)
                     contour_area = rc_utils.get_contour_area(contour)
                     found = True
-                    if color == RED or color == RED2:
+                    if color == RED:
                         cur_color = "red"
                     elif color == BLUE and cv.contourArea(contour) > 2000 and cv.contourArea(contour) < 3000:
                         continue
@@ -111,14 +100,13 @@ def update_contour():
                     elif color == GREEN:
                         cur_color = "green"
                     break
-        '''
+        
         if found:      
             rc_utils.draw_contour(image, contour)
             rc_utils.draw_circle(image, contour_center)
     
         # Display the image to the screen
         rc.display.show_color_image(image)
-        '''
         
 
 # [FUNCTION] The start function is run once every time the start button is pressed
@@ -197,12 +185,11 @@ def update():
         #print(f"ERROR: {error}")
         angle = remap_range(error, -rc.camera.get_width()/2, rc.camera.get_width()/2, -1, 1)
         if((contour_area > 7700 and not found) or (totaltime - 0.7 <= last_time and last_time != 0)):
-            if(angle < -0.7 or angle > -0.3):
+            if(angle < -0.6 or angle > -0.3):
                 angle = abs(angle)
-            if contour_area > 8000:
+            if contour_area > 7700:
                 last_time = totaltime
                 found = True
-        
         #print(f"ANGLE: {angle}")
 
     # Use the triggers to control the car's speed
