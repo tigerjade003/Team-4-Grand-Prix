@@ -7,7 +7,7 @@ File Name: lab_f.py
 
 Title: Lab F - Line Follower
 
-Author: Jaden Tang << [Write your name or team name here]
+Author: BWSI Team 4
 
 Purpose: Write a script to enable fully autonomous behavior from the RACECAR. The
 RACECAR should automatically identify the color of a line it sees, then drive on the
